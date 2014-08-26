@@ -19,6 +19,14 @@
 
 @end
 
+@protocol TouchBeginDelegate <NSObject>
+
+- (void)gestureTouchBegin;
+
+@end
+
+
+
 @interface TentacleView : UIView
 
 @property (nonatomic,strong) NSArray * buttonArray;
@@ -26,6 +34,8 @@
 @property (nonatomic,assign) id<VerificationDelegate> rerificationDelegate;
 
 @property (nonatomic,assign) id<ResetDelegate> resetDelegate;
+
+@property (nonatomic,assign) id<TouchBeginDelegate> touchBeginDelegate;
 
 /*
  1: Verify

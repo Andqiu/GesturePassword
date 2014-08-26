@@ -10,7 +10,7 @@
 #import <CoreFoundation/CoreFoundation.h>
 
 #import "GesturePasswordController.h"
-#import "GesturePasswordView.h"
+
 
 #import "KeychainItemWrapper/KeychainItemWrapper.h"
 
@@ -22,7 +22,7 @@
 
 @implementation GesturePasswordController {
     NSString * previousString;
-    NSString *password;
+    NSString * password;
 }
 
 @synthesize gesturePasswordView;
@@ -62,6 +62,7 @@
     gesturePasswordView = [[GesturePasswordView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     [gesturePasswordView.tentacleView setRerificationDelegate:self];
     [gesturePasswordView.tentacleView setStyle:1];
+    [gesturePasswordView setGesturePasswordDelegate:self];
     [self.view addSubview:gesturePasswordView];
 }
 
@@ -79,18 +80,37 @@
     [keychin resetKeychainItem];
 }
 
+#pragma -mark 改变手势密码
+- (void)change{
+    NSLog(@"c");
+}
+
+#pragma -mark 忘记手势密码
+- (void)forget{
+    NSLog(@"f");
+}
+
 - (BOOL)verification:(NSString *)result{
     if ([result isEqualToString:password]) {
+        [gesturePasswordView.state setTextColor:[UIColor colorWithRed:2/255.f green:174/255.f blue:240/255.f alpha:1]];
+        [gesturePasswordView.state setText:@"输入正确"];
         //[self presentViewController:(UIViewController) animated:YES completion:nil];
         return YES;
     }
+    [gesturePasswordView.state setTextColor:[UIColor redColor]];
+    [gesturePasswordView.state setText:@"手势密码错误"];
     return NO;
 }
 
 - (BOOL)resetPassword:(NSString *)result{
+    [gesturePasswordView.imgView setHidden:YES];
+    [gesturePasswordView.forgetButton setHidden:YES];
+    [gesturePasswordView.changeButton setHidden:YES];
     if ([previousString isEqualToString:@""]) {
         previousString=result;
         [gesturePasswordView.tentacleView enterArgin];
+        [gesturePasswordView.state setTextColor:[UIColor colorWithRed:2/255.f green:174/255.f blue:240/255.f alpha:1]];
+        [gesturePasswordView.state setText:@"请验证输入密码"];
         return YES;
     }
     else {
@@ -99,15 +119,20 @@
             [keychin setObject:@"<帐号>" forKey:(__bridge id)kSecAttrAccount];
             [keychin setObject:result forKey:(__bridge id)kSecValueData];
             //[self presentViewController:(UIViewController) animated:YES completion:nil];
+            [gesturePasswordView.state setTextColor:[UIColor colorWithRed:2/255.f green:174/255.f blue:240/255.f alpha:1]];
+            [gesturePasswordView.state setText:@"已保存手势密码"];
             return YES;
         }
         else{
             previousString =@"";
+            [gesturePasswordView.state setTextColor:[UIColor redColor]];
+            [gesturePasswordView.state setText:@"两次密码不一致，请重新输入"];
             return NO;
         }
     }
     
 }
+
 
 
 

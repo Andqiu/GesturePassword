@@ -20,6 +20,7 @@
 @synthesize buttonArray;
 @synthesize rerificationDelegate;
 @synthesize resetDelegate;
+@synthesize touchBeginDelegate;
 @synthesize style;
 
 - (id)initWithFrame:(CGRect)frame
@@ -41,6 +42,7 @@
     UITouch *touch = [touches anyObject];
     [touchesArray removeAllObjects];
     [touchedArray removeAllObjects];
+    [touchBeginDelegate gestureTouchBegin];
     success=1;
     if (touch) {
         touchPoint = [touch locationInView:self];

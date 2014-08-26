@@ -15,9 +15,15 @@
     
     CGPoint lineStartPoint;
     CGPoint lineEndPoint;
+    
 }
+@synthesize imgView;
+@synthesize forgetButton;
+@synthesize changeButton;
 
 @synthesize tentacleView;
+@synthesize state;
+@synthesize gesturePasswordDelegate;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -44,8 +50,38 @@
         [self addSubview:view];
         tentacleView = [[TentacleView alloc]initWithFrame:view.frame];
         [tentacleView setButtonArray:buttonArray];
+        [tentacleView setTouchBeginDelegate:self];
         [self addSubview:tentacleView];
+        
+        state = [[UILabel alloc]initWithFrame:CGRectMake(20, frame.size.height/2-140, 280, 30)];
+        [state setTextAlignment:NSTextAlignmentCenter];
+        [state setFont:[UIFont systemFontOfSize:14.f]];
+        [self addSubview:state];
+        
+        
+        imgView = [[UIImageView alloc]initWithFrame:CGRectMake(frame.size.width/2-35, frame.size.width/2-110, 70, 70)];
+        [imgView setBackgroundColor:[UIColor blueColor]];
+        [imgView.layer setCornerRadius:35];
+        [imgView.layer setBorderColor:[UIColor whiteColor].CGColor];
+        [imgView.layer setBorderWidth:3];
+        [self addSubview:imgView];
+        
+        
+        forgetButton = [[UIButton alloc]initWithFrame:CGRectMake(10, frame.size.height/2+200, 120, 30)];
+        [forgetButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [forgetButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [forgetButton setTitle:@"忘记手势密码" forState:UIControlStateNormal];
+        [forgetButton addTarget:self action:@selector(forget) forControlEvents:UIControlEventTouchDown];
+        [self addSubview:forgetButton];
+        
+        changeButton = [[UIButton alloc]initWithFrame:CGRectMake(190, frame.size.height/2+200, 120, 30)];
+        [changeButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [changeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [changeButton setTitle:@"修改手势密码" forState:UIControlStateNormal];
+        [changeButton addTarget:self action:@selector(change) forControlEvents:UIControlEventTouchDown];
+        [self addSubview:changeButton];
     }
+    
     return self;
 }
 
@@ -69,6 +105,18 @@
     CGContextDrawLinearGradient(context, gradient,CGPointMake
                                 (0.0,0.0) ,CGPointMake(0.0,self.frame.size.height),
                                 kCGGradientDrawsBeforeStartLocation);
+}
+
+- (void)gestureTouchBegin {
+    [self.state setText:@""];
+}
+
+-(void)forget{
+    [gesturePasswordDelegate forget];
+}
+
+-(void)change{
+    [gesturePasswordDelegate change];
 }
 
 
