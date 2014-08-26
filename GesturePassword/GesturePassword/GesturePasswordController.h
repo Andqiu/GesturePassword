@@ -11,4 +11,6 @@
 
 @interface GesturePasswordController : UIViewController <VerificationDelegate,ResetDelegate>
 
+- (void)clear;
+
 @end
