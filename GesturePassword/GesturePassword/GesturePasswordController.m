@@ -86,12 +86,10 @@
 
 #pragma -mark 改变手势密码
 - (void)change{
-    NSLog(@"c");
 }
 
 #pragma -mark 忘记手势密码
 - (void)forget{
-    NSLog(@"f");
 }
 
 - (BOOL)verification:(NSString *)result{

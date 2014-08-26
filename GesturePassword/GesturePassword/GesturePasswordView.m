@@ -32,7 +32,7 @@
         // Initialization code
         buttonArray = [[NSMutableArray alloc]initWithCapacity:0];
         
-        UIView * view = [[UIView alloc]initWithFrame:CGRectMake(frame.size.width/2-160, frame.size.height/2-100, 320, 320)];
+        UIView * view = [[UIView alloc]initWithFrame:CGRectMake(frame.size.width/2-160, frame.size.height/2-80, 320, 320)];
         for (int i=0; i<9; i++) {
             NSInteger row = i/3;
             NSInteger col = i%3;
@@ -53,28 +53,27 @@
         [tentacleView setTouchBeginDelegate:self];
         [self addSubview:tentacleView];
         
-        state = [[UILabel alloc]initWithFrame:CGRectMake(20, frame.size.height/2-140, 280, 30)];
+        state = [[UILabel alloc]initWithFrame:CGRectMake(frame.size.width/2-140, frame.size.height/2-120, 280, 30)];
         [state setTextAlignment:NSTextAlignmentCenter];
         [state setFont:[UIFont systemFontOfSize:14.f]];
         [self addSubview:state];
         
         
-        imgView = [[UIImageView alloc]initWithFrame:CGRectMake(frame.size.width/2-35, frame.size.width/2-110, 70, 70)];
-        [imgView setBackgroundColor:[UIColor blueColor]];
+        imgView = [[UIImageView alloc]initWithFrame:CGRectMake(frame.size.width/2-35, frame.size.width/2-80, 70, 70)];
+        [imgView setBackgroundColor:[UIColor whiteColor]];
         [imgView.layer setCornerRadius:35];
-        [imgView.layer setBorderColor:[UIColor whiteColor].CGColor];
+        [imgView.layer setBorderColor:[UIColor grayColor].CGColor];
         [imgView.layer setBorderWidth:3];
         [self addSubview:imgView];
         
-        
-        forgetButton = [[UIButton alloc]initWithFrame:CGRectMake(10, frame.size.height/2+200, 120, 30)];
+        forgetButton = [[UIButton alloc]initWithFrame:CGRectMake(frame.size.width/2-150, frame.size.height/2+220, 120, 30)];
         [forgetButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [forgetButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [forgetButton setTitle:@"忘记手势密码" forState:UIControlStateNormal];
         [forgetButton addTarget:self action:@selector(forget) forControlEvents:UIControlEventTouchDown];
         [self addSubview:forgetButton];
         
-        changeButton = [[UIButton alloc]initWithFrame:CGRectMake(190, frame.size.height/2+200, 120, 30)];
+        changeButton = [[UIButton alloc]initWithFrame:CGRectMake(frame.size.width/2+30, frame.size.height/2+220, 120, 30)];
         [changeButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [changeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [changeButton setTitle:@"修改手势密码" forState:UIControlStateNormal];
