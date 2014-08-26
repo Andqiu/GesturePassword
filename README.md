@@ -15,6 +15,8 @@ keychain做的数据持久化，利用苹果官方KeychainItemWrapper类
 
 下载后直接把 GesturePassword 下的GesturePassword文件丢到项目中去
 
+**在 TARGETS - Build Phases - "KeychainItemWrapper.m" - Compiler Flags (-fno-objc-arc)**
+
 在需要的地方直接可以调用ViewController
 
 第一次的时候会两次验证密码
