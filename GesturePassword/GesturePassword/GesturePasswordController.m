@@ -44,6 +44,7 @@
     KeychainItemWrapper * keychin = [[KeychainItemWrapper alloc]initWithIdentifier:@"Gesture" accessGroup:nil];
     password = [keychin objectForKey:(__bridge id)kSecValueData];
     if ([password isEqualToString:@""]) {
+        
         [self reset];
     }
     else {
@@ -71,6 +72,9 @@
     gesturePasswordView = [[GesturePasswordView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     [gesturePasswordView.tentacleView setResetDelegate:self];
     [gesturePasswordView.tentacleView setStyle:2];
+    [gesturePasswordView.imgView setHidden:YES];
+    [gesturePasswordView.forgetButton setHidden:YES];
+    [gesturePasswordView.changeButton setHidden:YES];
     [self.view addSubview:gesturePasswordView];
 }
 
@@ -103,9 +107,6 @@
 }
 
 - (BOOL)resetPassword:(NSString *)result{
-    [gesturePasswordView.imgView setHidden:YES];
-    [gesturePasswordView.forgetButton setHidden:YES];
-    [gesturePasswordView.changeButton setHidden:YES];
     if ([previousString isEqualToString:@""]) {
         previousString=result;
         [gesturePasswordView.tentacleView enterArgin];
