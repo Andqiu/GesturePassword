@@ -43,7 +43,12 @@
     previousString = [NSString string];
     KeychainItemWrapper * keychin = [[KeychainItemWrapper alloc]initWithIdentifier:@"Gesture" accessGroup:nil];
     password = [keychin objectForKey:(__bridge id)kSecValueData];
-    [self verify];
+    if ([password isEqualToString:@""]) {
+        [self reset];
+    }
+    else {
+        [self verify];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -53,7 +58,6 @@
 }
 
 #pragma -mark 验证手势密码
-
 - (void)verify{
     gesturePasswordView = [[GesturePasswordView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     [gesturePasswordView.tentacleView setRerificationDelegate:self];
@@ -62,7 +66,6 @@
 }
 
 #pragma -mark 重置手势密码
-
 - (void)reset{
     gesturePasswordView = [[GesturePasswordView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     [gesturePasswordView.tentacleView setResetDelegate:self];
@@ -70,9 +73,15 @@
     [self.view addSubview:gesturePasswordView];
 }
 
+#pragma -mark 清空记录
+- (void)clear{
+    KeychainItemWrapper * keychin = [[KeychainItemWrapper alloc]initWithIdentifier:@"Gesture" accessGroup:nil];
+    [keychin resetKeychainItem];
+}
 
 - (BOOL)verification:(NSString *)result{
     if ([result isEqualToString:password]) {
+        //[self presentViewController:(UIViewController) animated:YES completion:nil];
         return YES;
     }
     return NO;
@@ -87,7 +96,9 @@
     else {
         if ([result isEqualToString:previousString]) {
             KeychainItemWrapper * keychin = [[KeychainItemWrapper alloc]initWithIdentifier:@"Gesture" accessGroup:nil];
+            [keychin setObject:@"<帐号>" forKey:(__bridge id)kSecAttrAccount];
             [keychin setObject:result forKey:(__bridge id)kSecValueData];
+            //[self presentViewController:(UIViewController) animated:YES completion:nil];
             return YES;
         }
         else{
